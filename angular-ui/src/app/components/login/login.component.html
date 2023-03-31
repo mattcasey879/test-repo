@@ -1,0 +1,64 @@
+<h1 class="font-normal text-center mt-8">Sign In</h1>
+<div class="w-4 ml-auto mr-auto">
+  <form
+    (ngSubmit)="onSubmit(f)"
+    #f="ngForm"
+    class="flex flex-column justify-content-center row-gap-5 mt-6"
+  >
+    <span class="p-float-label m-auto">
+      <input
+        #email="ngModel"
+        style="width: 27rem"
+        type="text"
+        id="email"
+        pInputText
+        ngModel
+        name="email"
+        required
+        email
+        minlength="3"
+        maxlength="35"
+      />
+      <small
+        class="p-error block"
+        *ngIf="email.errors?.['required'] && (f.submitted || email.touched)"
+        >Email is required</small
+      >
+      <small
+        class="p-error block"
+        *ngIf="email.errors?.['email'] && email.touched"
+        >Enter a valid email</small
+      >
+      <label htmlFor="email block">Email</label>
+    </span>
+    <span class="p-float-label m-auto">
+      <input
+        #pass="ngModel"
+        style="width: 27rem"
+        type="password"
+        id="password"
+        ngModel
+        name="password"
+        pInputText
+        required
+        minlength="8"
+        maxlength="35"
+      />
+      <label htmlFor="password">Password</label>
+      <small
+        *ngIf="pass.errors?.['required'] && ( pass.touched || f.submitted)"
+        class="p-error block"
+        >Password is required</small
+      >
+      <small
+        class="p-error block"
+        *ngIf="pass.errors?.['minlength'] || pass.errors?.['maxlength']"
+      >
+        Password must be between 8 and 35 characters
+      </small>
+    </span>
+    <p-button type="submit" class="m-auto p-button-error" styleClass="p-2"
+      >Sign In</p-button
+    >
+  </form>
+</div>

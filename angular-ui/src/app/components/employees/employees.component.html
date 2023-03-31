@@ -1,0 +1,7 @@
+<h2 class="text-center mt-7 font-normal">All Employees</h2>
+<app-employee
+  (updatedEmployees)="updateEmployees($event)"
+  *ngFor="let employee of employees"
+  [employee]="employee"
+  [employees]="employees"
+></app-employee>

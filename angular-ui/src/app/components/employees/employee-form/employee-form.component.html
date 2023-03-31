@@ -1,0 +1,59 @@
+<h2 class="font-normal text-center mt-7">
+  {{ editMode ? "Edit" : "Create" }} Employee
+</h2>
+<h1 *ngIf="loading">Loading...</h1>
+<div *ngIf="!loading" class="w-5 ml-auto m-auto">
+  <form
+    (ngSubmit)="onSubmit()"
+    [formGroup]="employeeForm"
+    class="flex flex-wrap justify-content-between column-gap-5 row-gap-4 mt-6"
+  >
+  <div *ngFor="let field of formFields" [ngStyle]="{width: '40%'}">
+
+    <span
+      class="p-float-label"
+      [ngStyle]="{ width: '100%' }"
+    >
+      <p-dropdown
+        *ngIf="field == 'state'"
+        [formControlName]="field"
+        class="m-auto"
+        [style]="{ width: '100%' }"
+        [options]="states"
+        placeholder="Select a State"
+      >
+      </p-dropdown>
+      <input
+        [ngStyle]="{width: '100%'}"
+        *ngIf="field != 'state'"
+        [formControlName]="field"
+        required
+        type="text"
+        id="first-name"
+        pInputText
+        [defaultValue]="employee[field]"
+      />
+      <label [htmlFor]="field">{{ formatField(field) }}</label>
+    </span>
+    <small
+      *ngIf="f[field].errors?.['required'] && (f[field].touched || invalidSubmit)"
+      class="p-error mt-1 ml-1"
+      >{{formatField(field)}} is required</small
+    >
+    <small
+      *ngIf="f[field].errors?.['minlength'] || f[field].errors?.['maxlength']"
+      class="p-error mt-1 ml-1"
+      ><span *ngIf="f[field].errors?.['minlength'] ">Minimum of  {{ f[field].errors?.['minlength'].requiredLength }} characters</span>
+        <span *ngIf="!f[field].errors?.['minlength'] "> Maximum of {{f[field].errors?.['maxlength'].requiredLength}} characters</span>
+      </small
+    >
+    <small
+      *ngIf="f[field].errors?.['pattern']"
+      class="p-error block mt-1 ml-1"
+      >{{patternValidationMessages(field)}}</small
+    >
+  </div>
+    <div [style]="{ width: '100%' }"></div>
+    <p-button styleClass="p-2" class="m-auto" type="submit">Submit</p-button>
+  </form>
+</div>
